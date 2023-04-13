@@ -3,7 +3,13 @@ class Recipe {
   String imageUrl;
   double? ratings;
 
-  Recipe({this.name = "", this.imageUrl = "/", this.ratings});
+  Recipe({this.name = "", this.imageUrl = "/", this.ratings}) {
+    if (ratings != null) {
+      ratings = ratings! * 10;
+    } else {
+      ratings = 0;
+    }
+  }
 }
 
 class Recipes {
