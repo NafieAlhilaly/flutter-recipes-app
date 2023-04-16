@@ -24,13 +24,13 @@ class RecipeRequest {
     if (res.statusCode != 200) {
       throw Exception("Error while comunicating with APIs.");
     }
-
-    dynamic data = jsonDecode(res.body)["results"];
-    Recipes recipes = Recipes(recipes: []);
+    Map<String, dynamic> json = jsonDecode(res.body);
+    List data = json["results"];
+    List<Recipe> recipes = <Recipe>[];
     for (var recipeBody in data) {
-      double? score;
+      double? score = 0.0;
       dynamic userRatings = recipeBody["user_ratings"];
-      if (userRatings != null) {
+      if (userRatings != null && userRatings["score"] != null) {
         score = userRatings["score"] + .0;
       }
       Recipe recipe = Recipe(
@@ -39,7 +39,6 @@ class RecipeRequest {
           ratings: score);
       recipes.add(recipe);
     }
-
-    return recipes;
+    return Recipes(recipes: recipes);
   }
 }
