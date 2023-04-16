@@ -21,7 +21,12 @@ class RecipeCard extends StatelessWidget {
               children: [
                 Image.network(
                   recipe.imageUrl,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitWidth,
+                  height: 300,
+                  width: cardWidth + 10,
+                  errorBuilder: ((context, error, stackTrace) {
+                    return const Text("recipe iamge");
+                  }),
                 ),
                 SizedBox(
                   width: cardWidth - 30,
@@ -43,26 +48,32 @@ class RecipeCard extends StatelessWidget {
             SizedBox(
               height: 70,
               width: cardWidth - 10,
-              child: Row(children: [
-                Text(
-                  recipe.name,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const Spacer(),
-                Column(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const Icon(
-                      Icons.thumb_up,
-                      color: Colors.blue,
-                    ),
-                    Text(recipe.ratings.toString())
-                  ],
-                )
-              ]),
+                    Flexible(
+                        flex: 3,
+                        child: Text(
+                          recipe.name,
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Icon(
+                          Icons.thumb_up,
+                          color: Colors.blue,
+                        ),
+                        Text(recipe.ratings.toString())
+                      ],
+                    )
+                  ]),
             ),
           ],
         ));
