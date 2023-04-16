@@ -34,7 +34,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final Client client;
   _MainScreenState({required this.client});
+  TextEditingController _textEdit = TextEditingController();
   late Future<Recipes> recipes;
+  bool isSearchActive = false;
 
   @override
   void initState() {
@@ -47,9 +49,40 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
-          title: Text(widget.title),
+          title: isSearchActive
+              ? Card(
+                  child: TextField(
+                    controller: _textEdit,
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      border: InputBorder.none,
+                    ),
+                    onSubmitted: (value) {
+                      setState(() {
+                        recipes = RecipeRequest.getRecipes(
+                            client: client,
+                            searchFor: _textEdit.text.toString());
+                      });
+                    },
+                  ),
+                )
+              : const Text("Recipefy"),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            isSearchActive
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isSearchActive = false;
+                      });
+                    },
+                    icon: const Icon(Icons.close))
+                : IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isSearchActive = true;
+                      });
+                    },
+                    icon: const Icon(Icons.search))
           ],
         ),
         body: FutureBuilder<Recipes>(
