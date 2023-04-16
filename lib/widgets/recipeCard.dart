@@ -5,7 +5,7 @@ class RecipeCard extends StatelessWidget {
   final Recipe recipe;
   const RecipeCard({super.key, required this.recipe});
   final double cardWidth = 360;
-  final double heartIconWidth = 60;
+  final double heartIconWidth = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +29,41 @@ class RecipeCard extends StatelessWidget {
                   }),
                 ),
                 SizedBox(
-                  width: cardWidth - 30,
+                  width: cardWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.favorite_outline_rounded,
-                            size: heartIconWidth,
-                            color: Colors.white,
-                          ))
+                      Opacity(
+                          opacity: 0.8,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Container(
+                              width: 60.0,
+                              height: 60.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey[800],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 15,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Opacity(
+                                opacity: 1.0,
+                                child: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.favorite_outline_rounded,
+                                      size: heartIconWidth,
+                                      color: Colors.white,
+                                    )),
+                              ),
+                            ),
+                          )),
                     ],
                   ),
                 ),
